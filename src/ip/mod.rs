@@ -32,7 +32,7 @@
 */
 
 /// Get public address
-fn get_public_ip(_timeout: Option<std::time::Duration>) -> Result<String, Box<dyn std::error::Error>> {
+fn get_public_ip(_timeout: Option<std::time::Duration>) -> Result<IpAddr, Box<dyn std::error::Error>> {
     let providers = vec!["google.com", "checkip.amazonaws.com", "api.ipify.org"];
     // let found: Option<String> = None;
 
@@ -57,17 +57,17 @@ fn get_public_ip(_timeout: Option<std::time::Duration>) -> Result<String, Box<dy
 
         return match raw_public_ip{
             Some(ip) => {
-                if let IpValidationResult::InvalidFormat = validate_ip_detailed(&ip){
-                    continue
+                match ip.parse::<IpAddr>(){
+                    Ok(ip) => Ok(ip),
+                    Err(_e) => continue
                 }
-                // println!("PUBLIC IP => {ip}");
 
                 // // Type to find ip twice and compare both just to be sure
                 // if index < providers.len() && found.is_none() {
                 //     found = Some()
                 // }
                 
-                Ok(ip)
+                
             },
             None => continue
         }
@@ -80,13 +80,14 @@ fn get_public_ip(_timeout: Option<std::time::Duration>) -> Result<String, Box<dy
 #[test]
 fn test_get_public_address() {
     let x = get_public_ip(None);
+                // println!("PUBLIC IP => {x:#?}");
     assert!(x.is_ok());
 } 
 
 
-pub mod validation;
+// pub mod validation;
 
 
-use validation::{IpValidationResult, validate_ip_detailed};
+// use validation::{IpValidationResult, validate_ip_detailed};
 use std::io::{Read, Write};
-use std::net::{TcpStream, SocketAddr};
+use std::net::{TcpStream, SocketAddr, IpAddr};
