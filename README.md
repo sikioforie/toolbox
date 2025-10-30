@@ -2,5 +2,4 @@
 
 
 **Features**
-- [ ] IP tool 
-  - [*] Get public ip address 
+- [*] IP tool: Get public ip address 
