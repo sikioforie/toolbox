@@ -33,7 +33,7 @@
 
 /// Get public address
 pub fn get_public_ip(_timeout: Option<std::time::Duration>) -> Result<IpAddr, Box<dyn std::error::Error>> {
-    let providers = vec!["google.com", "checkip.amazonaws.com", "api.ipify.org"];
+    let providers = vec!["checkip.amazonaws.com", "api.ipify.org"];
     // let found: Option<String> = None;
 
     for (index, provider) in providers.iter().enumerate() {
@@ -80,7 +80,7 @@ pub fn get_public_ip(_timeout: Option<std::time::Duration>) -> Result<IpAddr, Bo
 #[test]
 fn test_get_public_address() {
     let x = get_public_ip(None);
-                // println!("PUBLIC IP => {x:#?}");
+    // println!("PUBLIC IP => {x:#?}");
     assert!(x.is_ok());
 } 
 
